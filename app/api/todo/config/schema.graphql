@@ -1,0 +1,11 @@
+module.exports = {
+  mutation: `removeCompleted: [Todo]!`,
+  resolver: {
+    Mutation:{
+      removeCompleted: {
+        description: "Remove completed todos",
+        resolver: 'application::todo.todo.removeCompleted'
+      }
+    }
+  }
+};
