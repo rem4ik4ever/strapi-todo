@@ -14,7 +14,7 @@ function TodoInput() {
     executeMutation({
       body: body.trim()
     }).then(result => {
-      if(result.error){
+      if (result.error) {
         console.error(result.error);
       }
       console.log(result.data);
@@ -23,10 +23,21 @@ function TodoInput() {
   }
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <input type="text" name="body" value={body} onChange={onChange} />
-        <button type="submit">Add Todo</button>
+    <div className="">
+      <form onSubmit={handleSubmit} className="">
+        <div className="container mx-auto my-2 rounded-lg mx-4 flex flex-row">
+          <input
+            type="text"
+            name="body"
+            className="w-full py-2 px-2 rounded-lg border-2 border-gray-300 focus:outline-none focus:border-gray-400"
+            value={body}
+            onChange={onChange}
+            placeholder="Wash dishes..."
+          />
+          <button className="whitespace-no-wrap p-2 border-l-2 border-gray-300 bg-gray-600 text-white rounded-lg hover:bg-gray-700 focus:outline-none" type="submit">
+            Add Todo
+          </button>
+        </div>
       </form>
     </div>
   );

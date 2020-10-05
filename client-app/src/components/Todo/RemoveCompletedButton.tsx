@@ -16,6 +16,7 @@ function RemoveCompletedButton() {
   };
   return (
     <button
+      className="bg-red-400 text-white text-lg p-2 rounded-lg hover:bg-red-500 focus:outline-none"
       type="button"
       onClick={onClick}
       disabled={removeCompletedResult.fetching}

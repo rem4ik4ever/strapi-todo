@@ -19,14 +19,18 @@ function TodoItem({ todo }: TodoProps) {
   };
   return (
     <li>
-      <div>
-        {todo.body}
-        <input
-          type="checkbox"
-          checked={todo.completed}
-          disabled={updatedTodoResult.fetching}
-          onChange={handleChange}
-        />
+      <div className="">
+        <label className="flex items-center">
+          <input
+            type="checkbox"
+            name={`checkbox-${todo.id}`}
+            className="w-5 h-5 m-1"
+            checked={todo.completed}
+            disabled={updatedTodoResult.fetching}
+            onChange={handleChange}
+          />
+          <span className="text-lg">{todo.body}</span>
+        </label>
       </div>
     </li>
   );
