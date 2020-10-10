@@ -4,7 +4,6 @@ import { Label, Input, Button, FormField, FieldError } from "components/common";
 import { useMutation } from "urql";
 import RegisterMutation from "components/SignUp/registerMutation";
 import { useFormik } from "formik";
-import { FaExclamationTriangle } from "react-icons/fa";
 import { SignupSchema } from "components/SignUp/SignupSchema";
 import InfoBar, { InfoBarStatusType } from "components/common/InfoBar";
 
@@ -28,11 +27,8 @@ const SignIn = () => {
       }).then((result) => {
         setSubmitting(false);
         if (result.error) {
-          console.log("Err", result.error);
           setError(true);
-          return;
         }
-        console.log("REs", result.data);
       });
     },
     validationSchema: SignupSchema,
