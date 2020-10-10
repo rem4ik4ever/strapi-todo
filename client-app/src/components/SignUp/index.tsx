@@ -18,7 +18,7 @@ const SignIn = () => {
       password: undefined,
       confirmPassword: undefined,
     },
-    onSubmit: (values) => {
+    onSubmit: (values, { setSubmitting }) => {
       registerUser({
         input: {
           username: values.username,
@@ -26,6 +26,7 @@ const SignIn = () => {
           password: values.password,
         },
       }).then((result) => {
+        setSubmitting(false);
         if (result.error) {
           console.log("Err", result.error);
           setError(true);
@@ -45,7 +46,7 @@ const SignIn = () => {
         className="bg-white shadow-md rounded px-8 pt-6 pb-8 my-4"
         onSubmit={handleSubmit}
       >
-        <h1 className="text-2xl text-center">Sign Up</h1>
+        <h1 className="text-2xl text-center mb-4">Sign Up</h1>
         {error && (
           <InfoBar
             type={InfoBarStatusType.Error}
