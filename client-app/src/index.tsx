@@ -1,9 +1,10 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './assets/main.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
-import ClientApp from './components/GraphQLClient'
+import React from "react";
+import ReactDOM from "react-dom";
+import "./assets/main.css";
+import "./assets/app.css";
+import App from "./App";
+import * as serviceWorker from "./serviceWorker";
+import ClientApp from "./components/GraphQLClient";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -11,7 +12,7 @@ ReactDOM.render(
       <App />
     </ClientApp>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 // If you want your app to work offline and load faster, you can change

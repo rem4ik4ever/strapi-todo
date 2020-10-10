@@ -1,10 +1,12 @@
-import React from 'react';
-import './App.css';
-import Todos from './components/Todo/index'
+import React from "react";
+import AppRouter from "./components/router";
+import { ToastProvider } from "react-toast-notifications";
 
 function App() {
   return (
-    <Todos />
+    <ToastProvider>
+      <AppRouter />
+    </ToastProvider>
   );
 }
 
