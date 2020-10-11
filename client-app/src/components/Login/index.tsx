@@ -2,43 +2,41 @@ import * as React from "react";
 import classNames from "classnames";
 import { Label, Input, Button, FormField, FieldError } from "components/common";
 import { useMutation } from "urql";
-import RegisterMutation from "components/SignUp/registerMutation";
 import { useFormik } from "formik";
-import { SignupSchema } from "components/SignUp/SignupSchema";
+import { LoginSchema } from "components/Login/LoginSchema";
 import InfoBar, { InfoBarStatusType } from "components/common/InfoBar";
+import loginMutation from "components/Login/loginMutation";
 import { useHistory } from "react-router-dom";
 import { useIdentity } from "context/AuthContext";
 
-const SignUp = () => {
-  const [res, registerUser] = useMutation(RegisterMutation);
+const Login = () => {
+  const { setAuthUser, setJWTToken } = useIdentity();
+  const [res, login] = useMutation(loginMutation);
   const [error, setError] = React.useState(false);
   const history = useHistory();
-  const { setAuthUser, setJWTToken } = useIdentity();
   const formik = useFormik({
     initialValues: {
-      username: "",
       email: "",
       password: undefined,
-      confirmPassword: undefined,
     },
     onSubmit: (values, { setSubmitting }) => {
-      registerUser({
+      login({
         input: {
-          username: values.username,
-          email: values.email,
+          identifier: values.email,
           password: values.password,
         },
       }).then((result) => {
         setSubmitting(false);
         if (result.error) {
           setError(true);
+        } else {
+          setAuthUser(result.data.login.user);
+          setJWTToken(result.data.login.jwt);
+          history.push("/");
         }
-        setAuthUser(result.data.login.user);
-        setJWTToken(result.data.login.jwt);
-        history.push("/");
       });
     },
-    validationSchema: SignupSchema,
+    validationSchema: LoginSchema,
     validateOnChange: false,
     validateOnBlur: true,
   });
@@ -49,23 +47,13 @@ const SignUp = () => {
         className="bg-white shadow-md rounded px-8 pt-6 pb-8 my-4"
         onSubmit={handleSubmit}
       >
-        <h1 className="text-2xl text-center mb-4">Sign Up</h1>
+        <h1 className="text-2xl text-center mb-4">Login</h1>
         {error && (
           <InfoBar
             type={InfoBarStatusType.Error}
-            content="Oops, Email or Username is taken"
+            content="Incorrect email or password"
           />
         )}
-        <FormField>
-          <Label htmlFor="username">Username</Label>
-          <Input
-            type="text"
-            name="username"
-            onChange={handleChange}
-            value={values.username}
-          />
-          <FieldError error={errors.username} />
-        </FormField>
         <FormField>
           <Label htmlFor="email">Email</Label>
           <Input
@@ -86,19 +74,9 @@ const SignUp = () => {
           />
           <FieldError error={errors.password} />
         </FormField>
-        <FormField>
-          <Label htmlFor="confirmPassword">Confirm Password</Label>
-          <Input
-            type="password"
-            name="confirmPassword"
-            onChange={handleChange}
-            value={values.confirmPassword}
-          />
-          <FieldError error={errors.confirmPassword} />
-        </FormField>
         <div className={classNames("mt-8")}>
           <Button type="submit" className="w-full" disabled={isSubmitting}>
-            Register
+            Login
           </Button>
         </div>
       </form>
@@ -106,4 +84,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default Login;

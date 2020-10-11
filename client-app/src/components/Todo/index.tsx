@@ -1,10 +1,12 @@
-import * as React from 'react';
-import TodoItem from './TodoItem';
-import TodoInput from './TodoInput';
-import TodoType from './TodoType';
-import { useQuery } from 'urql';
-import getTodos from './queries/getTodos';
-import RemoveCompletedButton from './RemoveCompletedButton';
+import * as React from "react";
+import TodoItem from "./TodoItem";
+import TodoInput from "./TodoInput";
+import TodoType from "./TodoType";
+import { useQuery } from "urql";
+import getTodos from "./queries/getTodos";
+import RemoveCompletedButton from "./RemoveCompletedButton";
+import { Button } from "components/common";
+import { useHistory } from "react-router-dom";
 
 const Header = () => (
   <div className="shadow-sm border-b-2 border-gray-200 mb-2">
@@ -14,7 +16,7 @@ const Header = () => (
 
 function Todos() {
   const [res] = useQuery(getTodos);
-
+  const history = useHistory();
   const { fetching, error, data } = res;
 
   if (fetching) return <div>Loading...</div>;
@@ -22,6 +24,14 @@ function Todos() {
 
   return (
     <div className="mx-auto h-full">
+      <Button
+        onClick={() => {
+          localStorage.removeItem("jwt");
+          history.push("/login");
+        }}
+      >
+        Logout
+      </Button>
       <Header />
       <div>
         <TodoInput />
