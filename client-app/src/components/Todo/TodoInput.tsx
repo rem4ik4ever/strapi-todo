@@ -1,10 +1,14 @@
-import React, { useState, FormEvent } from 'react';
-import { useMutation } from 'urql';
-import createTodo from './mutations/createTodo';
+import React, { useState, FormEvent } from "react";
+import { useMutation } from "urql";
+import createTodo from "./mutations/createTodo";
 
-function TodoInput() {
+type TodoInputProps = {
+  refresh: (props: any) => void;
+};
+
+function TodoInput({ refresh }: TodoInputProps) {
   const [_, executeMutation] = useMutation(createTodo);
-  const [body, setText] = useState('');
+  const [body, setText] = useState("");
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>): void =>
     setText(event.target.value);
@@ -12,13 +16,14 @@ function TodoInput() {
   function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
     event.preventDefault();
     executeMutation({
-      body: body.trim()
-    }).then(result => {
+      body: body.trim(),
+    }).then((result) => {
       if (result.error) {
         console.error(result.error);
       }
       console.log(result.data);
-      setText('');
+      setText("");
+      refresh({ requestPolicy: "network-only" });
     });
   }
 
@@ -34,7 +39,10 @@ function TodoInput() {
             onChange={onChange}
             placeholder="Wash dishes..."
           />
-          <button className="whitespace-no-wrap p-2 border-l-2 border-gray-300 bg-gray-600 text-white rounded-lg hover:bg-gray-700 focus:outline-none" type="submit">
+          <button
+            className="whitespace-no-wrap p-2 border-l-2 border-gray-300 bg-gray-600 text-white rounded-lg hover:bg-gray-700 focus:outline-none"
+            type="submit"
+          >
             Add Todo
           </button>
         </div>

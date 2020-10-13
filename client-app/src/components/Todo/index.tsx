@@ -8,14 +8,8 @@ import RemoveCompletedButton from "./RemoveCompletedButton";
 import { Button } from "components/common";
 import { useHistory } from "react-router-dom";
 
-const Header = () => (
-  <div className="shadow-sm border-b-2 border-gray-200 mb-2">
-    <h1 className="text-center text-2xl">Todos</h1>
-  </div>
-);
-
 function Todos() {
-  const [res] = useQuery(getTodos);
+  const [res, reexecuteQuery] = useQuery(getTodos);
   const history = useHistory();
   const { fetching, error, data } = res;
 
@@ -24,21 +18,12 @@ function Todos() {
 
   return (
     <div className="mx-auto h-full">
-      <Button
-        onClick={() => {
-          localStorage.removeItem("jwt");
-          history.push("/login");
-        }}
-      >
-        Logout
-      </Button>
-      <Header />
       <div>
-        <TodoInput />
+        <TodoInput refresh={reexecuteQuery} />
         <div className="container mx-auto px-2 py-2">
-          {data.todos.length > 0 ? (
+          {data.getTodos.length > 0 ? (
             <ul>
-              {data.todos.map((todo: TodoType) => (
+              {data.getTodos.map((todo: TodoType) => (
                 <TodoItem todo={todo} key={todo.id} />
               ))}
             </ul>

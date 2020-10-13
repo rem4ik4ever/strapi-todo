@@ -1,6 +1,6 @@
 const createTodo = `
   mutation CreateTodo($body: String){
-    createTodo(input:{data: {body: $body}}){
+    createUserTodo(input:{data: {body: $body}}){
       todo{
         id
         body

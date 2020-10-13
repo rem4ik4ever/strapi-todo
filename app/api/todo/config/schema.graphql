@@ -1,10 +1,31 @@
 module.exports = {
-  mutation: `removeCompleted: [Todo]!`,
+  query: `
+    getTodos: [Todo]!
+  `,
+  mutation: `  
+    removeCompleted: [Todo]!
+    createUserTodo(input: createTodoInput!): createTodoPayload!
+    updateUserTodo(input: updateTodoInput!): createTodoPayload!
+  `,
   resolver: {
+    Query: {
+      getTodos: {
+        description: "Get user Todos",
+        resolver: 'application::todo.todo.getTodos'
+      }
+    },
     Mutation:{
       removeCompleted: {
         description: "Remove completed todos",
         resolver: 'application::todo.todo.removeCompleted'
+      },
+      createUserTodo: {
+        description: "Create a Todo for a user",
+        resolver: 'application::todo.todo.createTodo'
+      },
+      updateUserTodo: {
+        description: "Update a Todo for a user",
+        resolver: 'application::todo.todo.updateTodo'
       }
     }
   }

@@ -6,7 +6,7 @@ import RegisterMutation from "components/SignUp/registerMutation";
 import { useFormik } from "formik";
 import { SignupSchema } from "components/SignUp/SignupSchema";
 import InfoBar, { InfoBarStatusType } from "components/common/InfoBar";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useIdentity } from "context/AuthContext";
 
 const SignUp = () => {
@@ -33,8 +33,8 @@ const SignUp = () => {
         if (result.error) {
           setError(true);
         }
-        setAuthUser(result.data.login.user);
-        setJWTToken(result.data.login.jwt);
+        setAuthUser(result.data.register.user);
+        setJWTToken(result.data.register.jwt);
         history.push("/");
       });
     },
@@ -100,6 +100,9 @@ const SignUp = () => {
           <Button type="submit" className="w-full" disabled={isSubmitting}>
             Register
           </Button>
+        </div>
+        <div className="text-center mt-4 text-blue-500">
+          <Link to="/login">Login</Link>
         </div>
       </form>
     </div>

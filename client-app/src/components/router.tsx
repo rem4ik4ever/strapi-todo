@@ -1,3 +1,4 @@
+import Header from "components/Header";
 import ProfileLoader from "components/ProfileLoader";
 import * as React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
@@ -9,6 +10,7 @@ const Login = React.lazy(() => import("components/Login"));
 const AppRouter = () => {
   return (
     <React.Suspense fallback="Loading">
+      <Header />
       <Router>
         <ProfileLoader />
         <Route path="/register" component={SignUp} />

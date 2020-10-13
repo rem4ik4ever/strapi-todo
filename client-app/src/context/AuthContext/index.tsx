@@ -38,7 +38,7 @@ const AuthContextProvider = ({ children }: Props) => {
 };
 
 export const useIdentity = () => {
-  return React.useContext(AuthContext);
+  return React.useContext<Context>(AuthContext);
 };
 
 export { AuthContext, AuthContextProvider };

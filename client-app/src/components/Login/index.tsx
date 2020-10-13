@@ -6,7 +6,7 @@ import { useFormik } from "formik";
 import { LoginSchema } from "components/Login/LoginSchema";
 import InfoBar, { InfoBarStatusType } from "components/common/InfoBar";
 import loginMutation from "components/Login/loginMutation";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useIdentity } from "context/AuthContext";
 
 const Login = () => {
@@ -78,6 +78,9 @@ const Login = () => {
           <Button type="submit" className="w-full" disabled={isSubmitting}>
             Login
           </Button>
+        </div>
+        <div className="text-center mt-4 text-blue-500">
+          <Link to="/register">Register</Link>
         </div>
       </form>
     </div>
